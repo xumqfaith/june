@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片上传</title>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			#file{display: none;}	
+			span{
+				margin: 10px 0  0 10px;
+				width: 200px;
+				height: 30px;
+				line-height: 30px;
+				display: block;
+				background: paleturquoise;
+				border-radius:10px;
+				text-align: center;
+			}
+			#canvas{
+				outline: 1px solid black;
+			}
+			.tips{
+				width: 200px;
+				height: 200px;
+				background: paleturquoise;
+				border-radius: 40px;
+				/*outline:solid red;outline 当宽度足宽9999px时，会是蒙版效果*/
+				/*box-shadow: 0 0 0 9999px;除了当前区块，其他内容全部显示为黑*/
+				
+			}
+		</style>
+	</head>
+	<body>
+		<label>
+			<input type="file" id="file"  />
+			<span>上传图片</span>
+		</label>
+		<canvas id="canvas" width="300" height="300"></canvas>
+		<div class="tips">	
+		</div>
+		<div class="test">	
+			我来看看
+		</div>
+		<script src="../js/jquery-3.2.0.js"></script>
+		<script type="text/javascript">
+			$('#file').change(function(){
+				var file=new FileReader;
+					file.onload=function(e){
+						var base64=e.target.result;
+						var img=new Image();
+						img.onload=function(){
+							var canvas=$('#canvas')[0];
+							var ctx=canvas.getContext('2d');
+							ctx.drawImage(img,0,0,canvas.height,canvas.width);
+						
+						}
+						img.src=base64;
+					}			
+					file.readAsDataURL(this.files[0]);
+					
+			});
+	
+		</script>
+	</body>
+</html>
